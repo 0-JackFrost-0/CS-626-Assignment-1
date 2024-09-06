@@ -13,6 +13,7 @@ iface = gr.Interface(
     inputs="text",
     outputs="text",
     title="POS Tagger",
+    allow_flagging=False,
     flagging_options=None,
     description="Enter a sentence to get Part-of-Speech tags."
 )
