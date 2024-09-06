@@ -172,7 +172,7 @@ class HMM:
         print(f"\nAverage F1 Score: {np.mean(f1)}")
 
         print("Confusion Matrix")
-        cm = confusion_matrix(y_true, y_pred, labels=all_tags)
+        cm = confusion_matrix(y_true, y_pred, labels=all_tags, normalize="true")
         plt.figure(figsize=(15, 10))
         sns.heatmap(cm, annot=True,xticklabels=all_tags, yticklabels=all_tags, cmap = plt.cm.Blues)
         plt.xlabel("Predicted")
@@ -203,13 +203,31 @@ class HMM:
             precision_list.append(precision)
             recall_list.append(recall)
 
+        mean_precision = np.mean(precision_list)
+        mean_recall = np.mean(recall_list)
+
+        f1_score = (2 * mean_precision * mean_recall) / (mean_precision + mean_recall)
+        f_2_score = (5 * mean_precision * mean_recall) / (4 * mean_precision + mean_recall)
+        f_half_score = (1.25 * mean_precision * mean_recall) / (0.25 * mean_precision + mean_recall)
+
         print(f"Overall average Accuracy: {np.mean(acc_list):.4f}")
         print(f"Overall average Precision: {np.mean(precision_list):.4f}")
         print(f"Overall average Recall: {np.mean(recall_list):.4f}")
-        print(f"Overall average F1 Score: {np.mean(f1_list):.4f}")
+        print(f"Overall average F1 Score: {f1_score}")
+        print(f"Overall average F2 Score: {f_2_score:.4f}")
+        print(f"Overall average F0.5 Score: {f_half_score:.4f}")
+
 
 hmm = HMM(data) 
 hmm.train()
 
 def get_POS(s):
     return hmm.viterbi(s)
+
+
+if __name__ == "__main__":
+    hmm.k_fold_cross_validation()
+
+    test_sentence = "The quick brown fox jumps over the lazy dog"
+    print(f"POS tags for the sentence: {test_sentence}")
+    print(get_POS(test_sentence))
