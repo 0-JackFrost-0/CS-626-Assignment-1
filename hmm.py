@@ -157,28 +157,28 @@ class HMM:
         precision = precision_score(y_true, y_pred, average=None,labels= all_tags)
         recall = recall_score(y_true, y_pred, average=None,labels= all_tags)
 
-        # print(f"Accuracy: {acc:.4f}")
-        # print(f"Precision per tag:")
-        # for i, tag in enumerate(all_tags):
-        #     print(f"{tag}: {precision[i]:.4f}" , end=" ")
-        # print("\nAverage Precision: ", np.mean(precision))
-        # print(f"Recall per tag:")
-        # for i, tag in enumerate(all_tags):
-        #     print(f"{tag}: {recall[i]:.4f}" , end=" ")
-        # print("\nAverage Recall: ", np.mean(recall))
-        # print(f"F1 Score per tag:")
-        # for i, tag in enumerate(all_tags):
-        #     print(f"{tag}: {f1[i]:.4f}", end=" ")
-        # print(f"\nAverage F1 Score: {np.mean(f1)}")
+        print(f"Accuracy: {acc:.4f}")
+        print(f"Precision per tag:")
+        for i, tag in enumerate(all_tags):
+            print(f"{tag}: {precision[i]:.4f}" , end=" ")
+        print("\nAverage Precision: ", np.mean(precision))
+        print(f"Recall per tag:")
+        for i, tag in enumerate(all_tags):
+            print(f"{tag}: {recall[i]:.4f}" , end=" ")
+        print("\nAverage Recall: ", np.mean(recall))
+        print(f"F1 Score per tag:")
+        for i, tag in enumerate(all_tags):
+            print(f"{tag}: {f1[i]:.4f}", end=" ")
+        print(f"\nAverage F1 Score: {np.mean(f1)}")
 
-        # print("Confusion Matrix")
-        # cm = confusion_matrix(y_true, y_pred, labels=all_tags)
-        # plt.figure(figsize=(15, 10))
-        # sns.heatmap(cm, annot=True,xticklabels=all_tags, yticklabels=all_tags, cmap = plt.cm.Blues)
-        # plt.xlabel("Predicted")
-        # plt.ylabel("True")
-        # plt.title("Confusion Matrix")
-        # plt.show()
+        print("Confusion Matrix")
+        cm = confusion_matrix(y_true, y_pred, labels=all_tags)
+        plt.figure(figsize=(15, 10))
+        sns.heatmap(cm, annot=True,xticklabels=all_tags, yticklabels=all_tags, cmap = plt.cm.Blues)
+        plt.xlabel("Predicted")
+        plt.ylabel("True")
+        plt.title("Confusion Matrix")
+        plt.show()
 
         return acc, f1, precision, recall
 
@@ -203,14 +203,13 @@ class HMM:
             precision_list.append(precision)
             recall_list.append(recall)
 
-        # print(f"Overall average Accuracy: {np.mean(acc_list):.4f}")
-        # print(f"Overall average Precision: {np.mean(precision_list):.4f}")
-        # print(f"Overall average Recall: {np.mean(recall_list):.4f}")
-        # print(f"Overall average F1 Score: {np.mean(f1_list):.4f}")
+        print(f"Overall average Accuracy: {np.mean(acc_list):.4f}")
+        print(f"Overall average Precision: {np.mean(precision_list):.4f}")
+        print(f"Overall average Recall: {np.mean(recall_list):.4f}")
+        print(f"Overall average F1 Score: {np.mean(f1_list):.4f}")
 
 hmm = HMM(data) 
-hmm.k_fold_cross_validation()
-hmm.train(data)
+hmm.train()
 
 def get_POS(s):
     return hmm.viterbi(s)
